@@ -1,0 +1,62 @@
+Problem 1:
+	Part a: What iss the status of README.md after performing the following operations?
+		--> README.md is now tracked and unmodified.  When you clone a repo, you have begun tracking the file, and you have not edited the file yet so it is unmodified
+
+	Part b: What is the status of README.md and fun_problem.txt after performing the following operations:
+		--> README.md is now a modified file that needs to be staged to be comited to the repo. fun_problem.txt is now an untracked new file, that must be added to the repo
+
+	Part c: 
+		--> README.md and fun_problem.txt are now staged to be commited to the repo, and they are now tracked
+
+	Part d:
+		--> README.md and fun_problem.txt are unmodified again and are tracked since they have been commited to the repo, but after the echo commands, they are modified again, and need to be staged to be commited to the repo
+
+	Part e:
+		-->README.md is staged to be committed, the changes on fun_problem.txt are discarded from the directory, so it is unmodified again.
+
+		*****Also, what are the contents of fun_problem.txt? Why?
+			the contents of fun_problem.txt are restored to what was as the comit state previously because checkouts changes were discared from the directory
+
+	Part f:
+	--> The status of README.md is staged and modified. Because README.md was already staged, the new line from the echo statement caused it to be a modified file again.
+	
+
+Problem 3:
+	1. a data type that stores all of the items at a restaurant, ordered by their number on the menu (an integer from 1 to 100).
+		A list of structs containing an integer for the number on the menu and a string for the name of the item.  This is the best option because it is ordered, which makes it easier to find the item given its index.
+
+	2. a data type that stores all of the movies in the Star Wars universe.
+		A set of strings.  This is the best option because each name is unique, and a set only contains one of each element. Also order does not matter, and since a set is just a bag of items, this works for a group of movies.
+
+	3. a data type that stores all of the books on Amazon: given an ISBN (a 13-digit number), it produces the book with that number.
+		A map from integers to strings. You can think of a map like a dictionary so if you are given the look up code, a map would be able to produce the book title.
+
+	4. a data type that stores all movies: given a year, it produces all movies released in that year.
+		A list ordered by year(integer) that has a value of a pointer to an array of strings.  That way when you enter the year, you are able to get all of the movies from the value of the strings
+
+		
+	5. a data type that stores all of the episodes of Game of Thrones: given a season and episode number, it produces the requested episode.
+		A set of structs consisting of two integers and a string, for season, episode, and episode title.  A set would work, because each episode of the show is unique, and ordering does not matter if given the season and episode number.
+
+Problem 4:
+
+	funcA([1,2,3,4,5]) returns 5 4 3 2 1
+
+	This is what is returned because if you follow the trace, you see that funcA will eventually return 5 because 
+	that is the last value of in that is reached through the traversal in funcA
+
+	in funcB the entire list [1, 2, 3, 4, 5] is passed in again and recursively smaller lists
+		2, 3, 4, 5
+		3, 4, 5
+		4, 5
+		5
+
+	are passed in 
+
+		once 5 is passed in to funcB, a null pointer is returned and the recursive call is made.
+
+		FuncB traverses down through the list returning 5, 4, 3, 2, 1 and then l points to 1 which points to null
+
+		Therefore when you return r which is pointing to 5, 5 then points to 4 -> 3 -> 2 -> 1 which points to null 
+
+	in the end, funcA([1, 2, 3, 4, 5]) returns a modified function of [5, 4, 3, 2, 1]

@@ -1,0 +1,24 @@
+Test input1.in passed!
+
+Test input2.in passed!
+
+Test input3.in passed!
+
+Test input4.in passed!
+
+Test input5.in failed.
+
+Test input6.in failed.
+
+Test input7.in passed!
+
+Test input8.in passed!
+
+Test input9.in passed!
+
+Test input10.in failed.
+
+Failed 3 tests:
+input5.in
+input6.in
+input10.in
