@@ -1,21 +1,9 @@
-hw6 
-
 Lauren Hampson
-USC ID 7356701945
-USC Email lhampson@usc.edu
 
-to make search
+USCID: 7356701945
 
-  type: make search
-  
-to make crawler
+email: lhampson@usc.edu
 
-  type: make crawler
-  
-to remove object files
+to make hypercube, type "make hypercube"
 
-  type: make clean
-  
-  
- Thanks!
- Lauren
+Note: I requested an extra grace day for this assignment, due to a family emergency, but never heard back so was not able to complete
