@@ -1,22 +1,28 @@
 Lauren Hampson
 
-USC CS104 
+USC ID: 7356701945
 
-USC ID 7356701945
-
-email: lhampson@usc.edu
+Email: lhampson@usc.edu
 
 
+Instructions for make:
 
-To make the file, run make search
+  To get the .o files for lengthmismatch, functor, Thanksgiving
 
-to run the file 
+run:
 
-type:
+  make lengthmismatch
+  
+  make functor
+  
+  make Thanksgiving
+  
+  
+  
+no make instructions for qsort.h because it is a templated class
 
-./search data/index.txt data/query.txt data/output.txt
 
 
+As seen in hw5.txt, the answers to question 3 part b can be found in hw5.pdf
 
-I was unable to figure out where all of my errors were so I am unsure if search will run, however the individual 
-classes that I created to work for most things if there is any possibility for partial credit.
+Thanks!
