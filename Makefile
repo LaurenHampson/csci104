@@ -1,16 +1,18 @@
-CXX = g++
-CPPFLAGS = -g -Wall
+# Let's declare some variables
 
-stringparser: stringparser.cpp stackstr.o lliststr.o
-	$(CXX) $(CPPFLAGS) $^ -o stringparser
+CC       = g++
 
-stackstr.o: stackstr.h stackstr.cpp lliststr.o
-	$(CXX) $(CPPFLAGS) -c stackstr.cpp -o stackstr.o
+CPPFLAGS = -Wall -g
 
-lliststr.o: lliststr.h lliststr.cpp
-	$(CXX) $(CPPFLAGS) -c lliststr.cpp -o lliststr.o
+BIN_DIR  = bin
 
-.PHONY: clean
+GTEST_LL = -I /usr/local/opt/gtest/include/ -l gtest -l gtest_main -pthread
 
-clean:
-	rm -rf *.o stringparser
+
+search: search.cpp querysearch.cpp lowercase.cpp webpage.cpp parser.cpp querysearch.h parser.h webpage.h
+
+	$(CC) $(CPPFLAGS)  -std=c++11 $^ -o $@
+
+clear:
+	
+	rm search

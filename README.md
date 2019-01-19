@@ -1,16 +1,22 @@
-
 Lauren Hampson
-CS104 
-HW3
-USCID 7356701945
 
-To compile the programs run:
+USC CS104 
 
-make clean
+USC ID 7356701945
 
-make
+email: lhampson@usc.edu
 
 
-To run string parser:
 
-./stringparser <input filename> <output filename>
+To make the file, run make search
+
+to run the file 
+
+type:
+
+./search data/index.txt data/query.txt data/output.txt
+
+
+
+I was unable to figure out where all of my errors were so I am unsure if search will run, however the individual 
+classes that I created to work for most things if there is any possibility for partial credit.
