@@ -3,6 +3,7 @@
 
 
 #include <iostream>
+#include <fstream>
 #include <exception>
 #include <cstdlib>
 #include <utility>
@@ -59,31 +60,6 @@ void SplayTree<Key, Value>::insert(const std::pair<const Key, Value>& keyValuePa
 	
 }
 
-template<typename Key, typename Value>
-void SplayTree<Key,Value>::swap(Node<Key, Value>* pred, Node<Key, Value>* node)
-{
-	Node<Key, Value>* predLeft = pred->getLeft();
-	Node<Key, Value>* predRight = pred->getRight();
-	Node<Key, Value>* predParent = pred->getParent();
-	//Node<Key, Value>*
-
-	Node<Key, Value>* nodeLeft = node->getRight();
-	Node<Key, Value>* nodeRight = node->getLeft();
-	Node<Key, Value>* nodeParent = node->getParent();
-
-	pred->setLeft(nodeLeft);
-	pred->setRight(nodeRight);
-	pred->setParent(nodeParent);
-
-	node->setLeft(predLeft);
-	node->setRight(predRight);
-	node->setParent(predParent);
-
-	return;
-}
-
-
-
 template <typename Key, typename Value>
 void SplayTree<Key, Value>::remove(const Key& key)
 {
@@ -110,73 +86,43 @@ void SplayTree<Key, Value>::remove(const Key& key)
 		return;
 	}
 
-	// Node<Key, Value>* pred =  this->SplayTree<Key, Value>::getPredecessor(BinarySearchTree<Key, Value>::mRoot);
-	// 		if (pred == node)
-	// 		{
-	// 			pred = SplayTree<Key, Value>::getSuccessor(node);
-	// 		}
-	// 		swap(pred, node);
-	else
+	
+	else if (node->getRight() == NULL && node->getLeft() == NULL)
 	{
-		Node<Key, Value>* pred = this->SplayTree<Key,Value>::getPredecessor(node);
-		if (pred == node)
-			{
-				pred = SplayTree<Key, Value>::getSuccessor(node);
-			}
-		swap(pred, node);
-
 		Node<Key, Value>* parent = node->getParent();
-		if (parent == NULL)
-		{
-			this->BinarySearchTree<Key, Value>::remove(key);
-			return;
-		}
-		else
-		{
-			this->BinarySearchTree<Key, Value>::remove(key);
-			splay(parent);
-			return;
-		}
-
+		BinarySearchTree<Key,Value>::remove(key);
+		splay(parent);
+		return;
+	}
+	else if (node->getRight() != NULL && node->getLeft() == NULL)
+	{
+		Node<Key, Value>* parent = node->getParent();
+		BinarySearchTree<Key,Value>::remove(key);
+		splay(parent);
+		return;
+	}
+	else if (node->getRight() == NULL && node->getLeft() != NULL)
+	{
+		Node<Key, Value>* parent = node->getParent();
+		BinarySearchTree<Key,Value>::remove(key);
+		splay(parent);
+		return;
 	}
 
-	
-// 	else if (node->getRight() == NULL && node->getLeft() == NULL)
-// 	{
-// 		Node<Key, Value>* parent = node->getParent();
-// 		BinarySearchTree<Key,Value>::remove(key);
-// 		splay(parent);
-// 		return;
-// 	}
-// 	else if (node->getRight() != NULL && node->getLeft() == NULL)
-// 	{
-// 		Node<Key, Value>* parent = node->getParent();
-// 		BinarySearchTree<Key,Value>::remove(key);
-// 		splay(parent);
-// 		return;
-// 	}
-// 	else if (node->getRight() == NULL && node->getLeft() != NULL)
-// 	{
-// 		Node<Key, Value>* parent = node->getParent();
-// 		BinarySearchTree<Key,Value>::remove(key);
-// 		splay(parent);
-// 		return;
-// 	}
-
-// 	else
-// 	{
-// 		Node<Key, Value>* parent = this->SplayTree<Key, Value>::removeHelper(key);
-// 		if (parent == NULL)
-// 		{
-// 			return;
-// 		}
-// 		if(parent == BinarySearchTree<Key, Value>::mRoot)
-// 		{
-// 			return;
-// 		}
-// 		splay(parent);
-// 		return;
-// 	}
+	else
+	{
+		Node<Key, Value>* parent = this->SplayTree<Key, Value>::removeHelper(key);
+		if (parent == NULL)
+		{
+			return;
+		}
+		if(parent == BinarySearchTree<Key, Value>::mRoot)
+		{
+			return;
+		}
+		splay(parent);
+		return;
+	}
 
 	
 }
@@ -184,12 +130,18 @@ void SplayTree<Key, Value>::remove(const Key& key)
 template <typename Key, typename Value>
 typename SplayTree<Key, Value>::iterator SplayTree<Key, Value>::find(const Key& key)
 {
+	if (this->BinarySearchTree<Key, Value>::mRoot == NULL)
+	{
+		typename SplayTree<Key, Value>::iterator it(nullptr);
+		return it;
+	}
+
 	Node<Key, Value>* node = this->SplayTree<Key, Value>::finder(key);
 	if(node->getKey() != key)
 	{
-		typename SplayTree<Key, Value>::iterator it(node);
 		splay(node);
-		return it;
+		return this->end();
+		
 	}
 
 	else
@@ -222,14 +174,14 @@ template <typename Key, typename Value>
 void SplayTree<Key, Value>::deleteMinLeaf()
 {
 	Node<Key,Value>* node = this->SplayTree<Key, Value>::getSmallestLeafNode();
-	remove(node->getKey());
+	SplayTree<Key, Value>::remove(node->getKey());
 }
 
 template <typename Key, typename Value>
 void SplayTree<Key, Value>::deleteMaxLeaf()
 {
 	Node<Key,Value>* node = this->SplayTree<Key, Value>::getLargestLeafNode();
-	remove(node->getKey());
+	SplayTree<Key, Value>::remove(node->getKey());
 }
 
 template <typename Key, typename Value>
@@ -290,6 +242,11 @@ void SplayTree<Key, Value>::splay(Node<Key, Value> *r)
 template<typename Key, typename Value>
 Node<Key, Value>* SplayTree<Key, Value>::getSmallestNode() const
 {
+	if(this->BinarySearchTree<Key,Value>::mRoot == NULL)
+	{
+	
+		return NULL;
+	}
 	Node<Key, Value>* node = BinarySearchTree<Key,Value>::mRoot;
 
 	while(node->getLeft()!=nullptr)
@@ -305,6 +262,10 @@ Node<Key, Value>* SplayTree<Key, Value>::getSmallestNode() const
 template<typename Key, typename Value>
 Node<Key, Value>* SplayTree<Key, Value>::getLargestNode() const
 {
+	if(this->BinarySearchTree<Key,Value>::mRoot == NULL)
+	{
+		return NULL;
+	}
 	Node<Key, Value>* node = BinarySearchTree<Key,Value>::mRoot;
 
 	while(node->getRight()!=nullptr)
@@ -320,6 +281,10 @@ Node<Key, Value>* SplayTree<Key, Value>::getLargestNode() const
 template<typename Key, typename Value>
 Node<Key, Value>* SplayTree<Key, Value>::getSmallestLeafNode() const
 {
+	if(this->BinarySearchTree<Key,Value>::mRoot == NULL)
+	{
+		return NULL;
+	}
 	Node<Key, Value>* node = BinarySearchTree<Key,Value>::mRoot;
 
 	while(node->getLeft()!=nullptr)
@@ -327,20 +292,33 @@ Node<Key, Value>* SplayTree<Key, Value>::getSmallestLeafNode() const
 		node = node->getLeft();
 	}
 
-	while(node->getLeft()!= NULL && node->getRight() != NULL)
+	if(node->getLeft() == NULL && node->getRight() == NULL)
 	{
-		while(node->getRight()!= NULL)
-		{
-			node = node->getRight();
-		}
-
-		while(node->getLeft()!=NULL)
-		{
-			node = node->getLeft();
-		}
+		return node;
 	}
 
-	
+	else
+	{
+		while(node->getLeft()!= NULL || node->getRight() != NULL)
+		{
+			while(node->getLeft()!=NULL)
+			{
+				node = node->getLeft();
+			}
+
+			while(node->getRight()!= NULL)
+			{
+				node = node->getRight();
+				if (node->getLeft() != NULL)
+				{
+					break;
+				}
+			}
+
+			
+		}
+
+	}
 
 	return node;
 
@@ -350,6 +328,10 @@ Node<Key, Value>* SplayTree<Key, Value>::getSmallestLeafNode() const
 template<typename Key, typename Value>
 Node<Key, Value>* SplayTree<Key, Value>::getLargestLeafNode() const
 {
+	if(this->BinarySearchTree<Key,Value>::mRoot == NULL)
+	{
+		return NULL;
+	}
 	Node<Key, Value>* node = BinarySearchTree<Key,Value>::mRoot;
 
 	while(node->getRight()!=nullptr)
@@ -357,17 +339,22 @@ Node<Key, Value>* SplayTree<Key, Value>::getLargestLeafNode() const
 		node = node->getRight();
 	}
 
-	while(node->getLeft()!= NULL && node->getRight() != NULL)
+	while(node->getLeft()!= NULL || node->getRight() != NULL)
 	{
-		while(node->getLeft()!= NULL)
-		{
-			node = node->getLeft();
-		}
-
 		while(node->getRight()!=NULL)
 		{
 			node = node->getRight();
 		}
+		while(node->getLeft()!= NULL)
+		{
+			node = node->getLeft();
+				if (node->getRight() != NULL)
+				{
+					break;
+				}
+		}
+
+		
 	}
 	return node;
 

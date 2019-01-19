@@ -631,16 +631,21 @@ void BinarySearchTree<Key, Value>::insert(const std::pair<const Key, Value>& key
 			{
 				//Node<Key, Value>* node = ;
 				prev->setLeft(new Node<Key,Value>(keyValuePair.first,keyValuePair.second, prev));
-				//node->setParent(prev);
-				heightUpdate(prev->getLeft(), 1);
+				prev->getLeft()->setParent(prev);
+				prev->getLeft()->setRight(NULL);
+				prev->getLeft()->setLeft(NULL);
+				//heightUpdate(prev->getLeft(), 1);
 				
 			}
 			else if(prev->getKey() < keyValuePair.first)
 			{
 				//Node<Key, Value>* node = new Node<Key,Value>(keyValuePair.first,keyValuePair.second, prev);
 				prev->setRight(new Node<Key,Value>(keyValuePair.first,keyValuePair.second, prev));
+				prev->getRight()->setParent(prev);
+				prev->getRight()->setRight(NULL);
+				prev->getRight()->setLeft(NULL);
 				//node->setParent(prev);
-				heightUpdate(prev->getRight(), 1);
+				//heightUpdate(prev->getRight(), 1);
 			}
 
 
@@ -719,7 +724,7 @@ void BinarySearchTree<Key, Value>::remove(const Key& key)
 	{
 		if(temp == mRoot)
 		{
-			heightUpdate(temp, 0);
+			//heightUpdate(temp, 0);
 			delete temp;
 			mRoot = nullptr;
 			//heightUpdate(temp, (temp->getHeight()-1));
@@ -729,7 +734,7 @@ void BinarySearchTree<Key, Value>::remove(const Key& key)
 
 		else if (temp->getParent()->getKey()> key)
 		{
-			heightUpdate(temp, 0);
+		//	heightUpdate(temp, 0);
 			temp->getParent()->setLeft(nullptr);
 			temp->setParent(nullptr);
 			temp->setLeft(nullptr);
@@ -741,7 +746,7 @@ void BinarySearchTree<Key, Value>::remove(const Key& key)
 		else
 		{
 
-			heightUpdate(temp, 0);
+			//heightUpdate(temp, 0);
 			temp->getParent()->setRight(nullptr);
 			temp->setParent(nullptr);
 			temp->setLeft(nullptr);
@@ -760,7 +765,7 @@ void BinarySearchTree<Key, Value>::remove(const Key& key)
 
 	if (temp->getRight() == nullptr && temp->getLeft() != nullptr)
 	{
-		heightUpdate(temp, (temp->getHeight()-1));
+		//heightUpdate(temp, (temp->getHeight()-1));
 		if(temp == mRoot)
 		{
 				mRoot = temp->getLeft();
@@ -796,7 +801,7 @@ void BinarySearchTree<Key, Value>::remove(const Key& key)
 	
 	if (temp->getRight() != nullptr && temp->getLeft() == nullptr)
 	{
-		heightUpdate(temp, (temp->getHeight()-1));
+		//heightUpdate(temp, (temp->getHeight()-1));
 
 			if(temp == mRoot)
 		{
@@ -860,7 +865,7 @@ void BinarySearchTree<Key, Value>::remove(const Key& key)
 
 	if (temp->getRight() != nullptr && temp->getLeft() != nullptr)
 	{
-		heightUpdate(pred,pred->getHeight()-1);
+		//heightUpdate(pred,pred->getHeight()-1);
 
 		if(temp == mRoot)
 		{
@@ -881,7 +886,7 @@ void BinarySearchTree<Key, Value>::remove(const Key& key)
 						pred->setRight(pred->getParent()->getRight());
 						pred->getParent()->getRight()->setParent(pred);
 						pred->getParent()->setRight(NULL);
-						pred->setHeight(temp->getHeight());
+						//pred->setHeight(temp->getHeight());
 						
 						pred->setParent(nullptr);
 						mRoot->setParent(nullptr);
@@ -908,7 +913,7 @@ void BinarySearchTree<Key, Value>::remove(const Key& key)
 						pred->setLeft(pred->getParent()->getLeft());
 						pred->getParent()->getLeft()->setParent(pred);
 						pred->getParent()->setLeft(NULL);
-						pred->setHeight(temp->getHeight());
+						//pred->setHeight(temp->getHeight());
 					
 						pred->setParent(nullptr);
 						mRoot->setParent(nullptr);
@@ -945,7 +950,7 @@ void BinarySearchTree<Key, Value>::remove(const Key& key)
 						pred->setRight(pred->getParent()->getLeft());
 						pred->getParent()->getLeft()->setParent(pred);
 						pred->getParent()->setLeft(NULL);
-						pred->setHeight(temp->getHeight());
+						//pred->setHeight(temp->getHeight());
 						pred->setParent(nullptr);
 						mRoot->setParent(nullptr);
 						mRoot = pred;
@@ -972,7 +977,7 @@ void BinarySearchTree<Key, Value>::remove(const Key& key)
 						pred->getParent()->getRight()->setParent(pred);
 						pred->getParent()->setRight(NULL);
 						pred->setParent(nullptr);
-						pred->setHeight(temp->getHeight());
+						//pred->setHeight(temp->getHeight());
 						mRoot->setParent(nullptr);
 						mRoot = pred;
 
@@ -999,7 +1004,7 @@ void BinarySearchTree<Key, Value>::remove(const Key& key)
 			
 			pred->setRight(temp->getRight());
 				if(pred->getRight()!= NULL)pred->getRight()->setParent(pred);
-			pred->setHeight(temp->getHeight());
+		//	pred->setHeight(temp->getHeight());
 			//heightUpdate(mRoot, mRoot->getHeight()-1)
 				//mRoot->setLeft(pred->getLeft());
 				//temp->getRight()->setParent(mRoot);
@@ -1049,8 +1054,8 @@ void BinarySearchTree<Key, Value>::remove(const Key& key)
 			{
 				pred->getParent()->setRight(pred);
 			}
-			pred->setHeight(temp->getHeight());
-			temp->setHeight(0);
+		//	pred->setHeight(temp->getHeight());
+			//temp->setHeight(0);
 			temp->setParent(NULL);
 			temp->setLeft(NULL);
 			temp->setRight(NULL);
@@ -1079,7 +1084,7 @@ void BinarySearchTree<Key, Value>::remove(const Key& key)
 			pred->setRight(temp->getRight());
 			pred->getRight()->setParent(pred);
 
-			pred->setHeight(temp->getHeight());
+//			pred->setHeight(temp->getHeight());
 
 			if (pred->getKey()<temp->getParent()->getKey())
 			{
@@ -1090,9 +1095,9 @@ void BinarySearchTree<Key, Value>::remove(const Key& key)
 			{
 				pred->getParent()->setRight(pred);
 			}
-			pred->setHeight(temp->getHeight());
+		//	pred->setHeight(temp->getHeight());
 
-			temp->setHeight(0);
+			//temp->setHeight(0);
 			temp->setParent(NULL);
 			temp->setLeft(NULL);
 			temp->setRight(NULL);
@@ -1122,7 +1127,7 @@ void BinarySearchTree<Key, Value>::remove(const Key& key)
 			pred->setRight(temp->getRight());
 							pred->getRight()->setParent(pred);
 
-			pred->setHeight(temp->getHeight());
+		//	pred->setHeight(temp->getHeight());
 
 			if (pred->getKey()<temp->getParent()->getKey())
 			{
@@ -1134,8 +1139,8 @@ void BinarySearchTree<Key, Value>::remove(const Key& key)
 				pred->getParent()->setRight(pred);
 			}
 
-			pred->setHeight(temp->getHeight());
-			temp->setHeight(0);
+		//	pred->setHeight(temp->getHeight());
+		//	temp->setHeight(0);
 			temp->setParent(NULL);
 			temp->setLeft(NULL);
 			temp->setRight(NULL);
@@ -1203,7 +1208,15 @@ Node<Key, Value>* BinarySearchTree<Key, Value>::getSmallestNode() const
 template<typename Key, typename Value>
 Node<Key, Value>* BinarySearchTree<Key, Value>::internalFind(const Key& key) const 
 {
-	Node<Key, Value>* temp = mRoot;
+	if ( this->BinarySearchTree<Key, Value>::mRoot == NULL)
+	{
+		return NULL;
+	}
+	Node<Key, Value>* temp = this->mRoot;
+	if(temp == NULL)
+	{
+		return NULL;
+	}
 	while(temp)
 	{
 		if (key == temp->getKey())
