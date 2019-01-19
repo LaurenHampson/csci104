@@ -1,0 +1,217 @@
+Problem 2 --> Runtime Analysis
+
+Part a 
+
+Stack s; //All operations on a stack take constant time.
+for (int i = 0; i < n; i++) { Theta(n)
+    for (int j = i; j < n; j++) { --> Theta(n)
+        s.push(j);  --> Theta(1)
+    }
+    for (int k = n; k > i; k--) { Theta(n)
+        s.pop(); Theta(1)
+    }
+}
+while (!s.empty()) {-->Theta(1)
+    s.pop(); --> Theta(1)
+}
+
+The runtime of part a will be Theta(n^2).  Although it may seem like the correct answer would be 
+theta(n^3), given the three different for loops, it is only theta(n^2) because the third nested for loop is not nested in the 2nd one but only the first 
+
+Therefore the two nested for loops only run n^2 times each so overall it is 2n^2 which
+is the theta notation of Theta(n^2) given that 2 is just a constant and doesnt have an effect on the over all growth rate.
+
+All other operations are constant, so they have no effect on the overall run time of the problem. 
+
+Looking at the first for loop, it will execute n times from i = 0 to n, therefore it is T(n).
+
+In the second for loop it is nested so it will be n^2 as well as the third for loop.
+
+The while loop will then be n given that it iterates until the queue is empty.
+
+Theta is the upper bound so the funtion is T(n^2)
+
+Part B
+
+func(0, n);
+
+void func(int curr, int n) {
+    if (n <= 0) return; 			//T(0)
+    if (curr <= 0) func(n-1, n-1);  // T(n) --> (T(n-1) + a constant comparison
+    else func(curr-1, n);			//T(n) 
+}
+
+Given the function call of func(0,n), the runtime of this function would be Theta(n^2).
+
+This is because the number of times func gets called is based on n and both the if and the else statements are called there for it is T(current value + n^2) and sense current value is a constant number,that could end up being negligible, the running time is equivalent to T(n^2)
+
+
+Part c
+
+Queue q; //all operations on a Queue take constant time.
+for (int i = 1; i <= n; i++) {  // T(n)
+    q.enqueue(i);
+}
+bool swap = false;
+while (!q.empty()) { //theta(n)
+    if (swap) {//Theta(1) happens n/2 times so it is theta(n)
+        if (q.front() == 1) { //Theta(1)
+            for (int i = n+1; i <= 2n; i++) { //THeta(n)
+                q.enqueue(i); Theta(1)
+            }
+        }
+        q.dequeue(); //THeta(1)
+    }
+    else { //happens n/2 times
+        q.enqueue(q.front()); //theta(1)
+        q.dequeue();//theta(1)
+    }
+    swap = !swap;
+}
+
+The theta notation of this peice of code is Theta(n).  The initial for loop executes n times so it is T(n). The while loop then happens until the queue is empty so it is T(n).
+
+The for loop inside the first if statement also is T(n) as well.  
+
+The rest of the n elements are operated on but they are all done in constant time therefore the overall run time is  3T(n) which is T(n)
+
+
+Part d
+
+
+struct Node {
+    int value;
+    Node *next;
+    Node(int i) : value(i) {};
+};
+
+Node *head = NULL;
+for (int i = 0; i < n; i++) {   // ********* T(n)
+    Node *curr = new Node(i);
+    curr->next = head;
+    head = curr;
+}
+for (int i = 1; i < n; i++) { //**************** T(n)
+    Node *curr = head;
+    while (curr) { theta of n  //************* T(n)
+        if ((curr->value % i == 0) && (arr[i] == 0)) { ******* worst case this happens every time so it would be theta(logn) limits while loop although the comparison is only theta(1)
+            for (int j = arr[i]; j < n; j++) { *******Theta(n)
+                arr[j] *= 2;
+            }
+        }
+        curr = curr->next;
+    }
+}
+
+The run time of this function is theta of n^2logn this is because the while loop will execute n times and the if statement will execute worst case a total of logn times Because the while loop is nested in a for loop, that runs T(n) the upper bound of the run time is T(n^2logn).
+
+
+
+
+Problem 3 Amortized Analysis
+
+void someclass::somefunc() {
+    if (this->n == this->max) {
+        bar();
+        this->max *= 2;
+    } 
+    else {
+        foo();
+    }
+    (this->n)++;
+}
+
+
+Assume that when someclass is created, n=0 and max=1. Neither variable is changed when calling bar() or foo().
+Part (a)
+What is the worst-case runtime for somefunc, if bar takes Θ(n^2) time and foo takes Θ(log n) time?
+logn for the first else statement
+
+
+
+Worst case run time for this function call would be T(n^2)
+
+
+Part (b)
+What is the amortized runtime for somefunc, if bar takes Θ(n^2) time and foo takes Θ(log n) time?
+
+The amortized run time for this function is T(n).  This is because in a worst case scenario foo is run (n-1) times
+that bar is run, so to get the amortized run time you look to the equation
+
+(n-1)logn+1 * n2
+----------------
+		n
+
+Which gives you the run time T(n)
+
+Part (c)
+What is the amortized runtime for somefunc, if bar takes Θ(n^2) time and foo takes Θ(n log n) time?
+
+Like part b, foo is run every (n-1) times that bar is called once so we look to the equation
+
+(n-1)nlogn+1 * n^2
+------------------
+		n
+
+
+Which simplifies to the amortized run time of T(nlogn)
+
+
+Part (d)
+
+Suppose there is another function:
+void someclass::anotherfunc() {
+    if (this->n > 0) { 
+        (this->n)--;
+    }
+    if (this->n < (this->max)/2) {
+        bar();
+        this->max /= 2;
+    } 
+    else {
+        foo();
+    }
+}
+
+void someclass::somefunc() {
+    if (this->n == this->max) {
+        bar();
+        this->max *= 2;
+    } 
+    else {
+        foo();
+    }
+    (this->n)++;
+}
+
+Assume that bar takes Θ(n^2) time and foo takes Θ(log n) time. What is the worst-case sequence of calls to somefunc and anotherfunc? What would be the amortized runtime per function call?
+
+
+Worst case sequence
+
+someFunc
+someFunc
+someFunc
+anotherFunc
+anotherFunc
+anotherFunc
+
+
+Amortized run time per function call
+
+2/3 n = n^2
+1/3 = logn
+
+
+In the above worst case sequence of calls, 2/3 of the time the runtime of the function is n^2, and 1/3 of the time the runtime is 
+logn. If this sequence is called repeatedly
+
+the average is 
+
+2/3 n^2 + 1/3 logn
+-------------------  therefore the total amortized run time of per function call is T(n^2) given that that is the upper bound of the 																previous equation
+number of calls
+
+
+
+

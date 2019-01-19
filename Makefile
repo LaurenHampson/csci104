@@ -1,10 +1,16 @@
-all: fullsort lliststr assassin
+CXX = g++
+CPPFLAGS = -g -Wall
 
-fullsort: ../fullsort.cpp fullsort_gtest.cpp
-	python compile.py 5
+stringparser: stringparser.cpp stackstr.o lliststr.o
+	$(CXX) $(CPPFLAGS) $^ -o stringparser
 
-lliststr: ../lliststr.h ../lliststr.cpp lliststr_gtest.cpp
-	python compile.py 6
+stackstr.o: stackstr.h stackstr.cpp lliststr.o
+	$(CXX) $(CPPFLAGS) -c stackstr.cpp -o stackstr.o
 
-assassin: ../assassin.cpp
-	python hw2-checker.py
+lliststr.o: lliststr.h lliststr.cpp
+	$(CXX) $(CPPFLAGS) -c lliststr.cpp -o lliststr.o
+
+.PHONY: clean
+
+clean:
+	rm -rf *.o stringparser
