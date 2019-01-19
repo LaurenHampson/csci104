@@ -1,0 +1,122 @@
+Problem 1: 
+
+	Part a: WHich of the following are acceptable behaviors in solving homeworks/projects?  
+
+		Answers: 1, 4 
+
+	Part b: to dispute a grade on an assignment you should
+
+		Answers: 2, 3, 4
+
+	Part c: Which of the following are recommended ways of writing code?
+
+		Answers: 2,3,4, 5
+
+	Part d: What is the late submission policy?
+
+		Answers: 2
+
+	Part e: What should you do to ensure you are submitting your code correctly?
+
+		Answers: 2, 3, 4, 5
+
+
+
+Problem 2:
+ 	
+ 	Part a: Which of the following git user interffaces are accepted and supported in this course?
+ 	
+ 		Answers: 3
+
+ 	Part b: When cloning a Git repo, which of the following should you avoid?
+
+ 		Answers: 1, 2
+
+ 	Part c: Provide the appropriate git command to perorm the following operations
+	 	
+	 	1. Stage an untracked file to be committed. The (hypothetical) file is called 'hw1q2b.cpp'.
+
+	 		Command: git add hw1q2b.cpp
+
+		2. Display the details of the last three commits in the repository.
+			
+
+			Command: git log/p/3 
+
+	Part d: Let's say you staged three files to be committed. Then, you ran the following cocmmand: git commit,  what will git do?
+
+		Answer: This will launch your choice code eitor that was chosen during configuration.  This will alow you to enter the commit messages for each of the three files.
+
+	Part e: What is the full command to re-clone your private CSCI104 repo to your VM? Assume you are in an appropriate folder
+
+		Answer: 
+			git clone git@github.com:usc-csci104-spring2018/hw-lhampson.git
+
+Problem 3:
+
+	Review
+
+Problem 4: 
+
+	1.  The output is
+
+		1
+		2
+		3
+		4
+		5
+
+		CODE TRACE FOR EXPLANATION
+
+
+		funcA([1, 2, 3, 4, 5] , 5)
+
+			int *a = [1, 2, 3, 4, 5]
+			size = 5
+
+			funcB([1, 2, 3, 4, 5], 0, 4)
+				min = 0, max = 4, mid - 2
+
+				funcB([1, 2, 3, 4, 5], 0, 2)
+					min = 0, max = 2, mid = 1
+
+					funcB([1, 2, 3, 4, 5], 0, 1)
+						min = 0, max = 1, mid = 0
+
+						funcB([1, 2, 3, 4, 5], 0, 0)
+
+							prints a[0] which is 1, and then prints a new line
+
+						funcB([1, 2, 3, 4, 5], 1, 1)
+							prints a[1] which is 2, and then prints a new line
+
+					funcB ([1, 2, 3, 4, 5], 2, 2)
+						prints a[2] which is 3, and then prints a new line
+
+				funcB([1, 2, 3, 4, 5], 3, 4)
+					min = 3, max = 4, mid = 3
+
+					funcB([1, 2, 3, 4, 5], 3, 3)
+						prints a[3] which is 4, and then prints a new line
+
+					funcB([1, 2, 3, 4, 5], 4, 4)
+						prints a[4] which is 5, and then prints a new line
+
+				Code terminates once al recursive calls have been complete, final output is:
+				1
+				2
+				3
+				4
+				5
+
+
+
+
+	2. funcB will fail to terminate on any input values where the min value is greater than the max input
+
+		funcB will always terminate for the other input values because the function will always increment and decrement the min and max values in a way that it will eventually reach the if statement where min == max.
+
+	3. when funcB(a, min, max) is called, the function traces through the input, and then as it back traces, prints the elements out on one line at a time.  The recursion causes it to reach the first element first as it calls funcB on a smaller interval each time.
+
+	
+
