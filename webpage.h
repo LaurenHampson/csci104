@@ -13,13 +13,15 @@ class WebPage
 		WebPage(std::string filename);
 		~WebPage();
 		void getWords(std::set<std::string>& words);
-		const std::set<std::string>& printWords(); //const;
+		const std::set<std::string>& printWords(); 
 		void incomingLink (const std::string name);
-		const std::set<std::string>& incomingLinks(); //const;
+		const std::set<std::string>& incomingLinks(); 
 		void outgoingLink (std::set<std::string>& words);
-		const std::set<std::string>&  outgoingLinks(); //const;		
+		const std::set<std::string>&  outgoingLinks(); 		
 		std::string filename();
 		void filename(std::string name);
+				void outAdd(std::string word);
+
 
 
 

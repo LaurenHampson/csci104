@@ -77,6 +77,7 @@ using namespace std;
 
 						links.insert(link);
 						link = "";
+						return;
 						
 					}
 
@@ -91,6 +92,7 @@ using namespace std;
 		string output = "";
 		char c;
 
+		//uses markdown format to get any outgoing links from each input file
 
 		while(in.get(c))
 		{
@@ -98,6 +100,7 @@ using namespace std;
 			if ((isdigit(c)) || (isupper(c)) || (islower(c)))
 			{
 				output += c;
+				continue;
 			}
 			
 			else if (output != "" && isspace(c))
@@ -129,6 +132,10 @@ using namespace std;
 
 		}
 
-
+		if (output!= "")
+		{
+			words.insert(lowerCase(output));
+		}
 			in.close();
-}
+		}
+

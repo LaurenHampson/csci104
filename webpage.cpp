@@ -68,12 +68,14 @@ using namespace std;
 				outgoing_.insert(lowerCase(*i));
 			}
 		}
+		void WebPage::outAdd(std::string word)//add a single outGoing link--> used for the self loop in pageRank/candidate set
+		{
+			outgoing_.insert(word);
+		}
 		const std::set<std::string>& WebPage::outgoingLinks() //const; // return all of the outgoing links from a given webpage
 		{
 			return outgoing_;			
 		}	
 
 
-		//check map
-		//check intersect and union
-		//check where i am passing information from one function to another
+		

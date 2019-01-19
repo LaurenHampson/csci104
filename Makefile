@@ -1,28 +1,23 @@
-CXX = g++
+# Let's declare some variables
 
-CPPFLAGS = -g -Wall
+CC       = g++
 
+CPPFLAGS = -Wall -g
 
-LengthMismatch: LengthMismatch.h LengthMismatch.cpp
+BIN_DIR  = bin
 
-	$(CXX) $(CPPFLAGS) $^ -c
-
-
-functor: functor.h functor.cpp
-
-	$(CXX) $(CPPFLAGS) $^ -c
-
-Thanksgiving: Thanksgiving.cpp LengthMismatch.h LengthMismatch.cpp
-
-	$(CXX) $(CPPFLAGS) $^ -c 
+GTEST_LL = -I /usr/local/opt/gtest/include/ -l gtest -l gtest_main -pthread
 
 
-.PHONY: clean
+search: search.cpp querysearch.cpp lowercase.cpp webpage.cpp parser.cpp querysearch.h parser.h webpage.h 
 
+	$(CC) $(CPPFLAGS)  -std=c++11 $^ -o $@
 
+crawler: crawler.cpp 
 
-clean:
+	$(CC) $(CPPFLAGS)  -std=c++11 $^ -o $@
 
-	rm -rf *.o LengthMismatch
-	rm -rf *.o functor
-	rm -rf *.o Thanksgiving
+clear:
+	
+	rm crawler
+	rm search
